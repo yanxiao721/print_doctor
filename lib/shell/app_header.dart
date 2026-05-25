@@ -71,7 +71,17 @@ class SupportAuthorButton extends StatelessWidget {
             border: Border.all(color: const Color(0xFFC9E7E1)),
           ),
           child: compact
-              ? const Icon(Icons.volunteer_activism_outlined, size: 18, color: Color(0xFF0F766E))
+              ? const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.volunteer_activism_outlined, size: 16, color: Color(0xFF0F766E)),
+                    SizedBox(width: 5),
+                    Text(
+                      '支持作者',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: Color(0xFF0F514A)),
+                    ),
+                  ],
+                )
               : Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -147,7 +157,7 @@ class RewardDialog extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 14),
-              const Text('如果这个工具帮你少废了一卷料，可以随手支持一下。感谢每一次真实使用和反馈。', style: TextStyle(fontSize: 13, height: 1.5, color: Color(0xFF344054))),
+              const Text('如果这个工具帮你少废了一卷料,解决了一些问题，可以随手支持一下。感谢每一次真实使用和反馈。', style: TextStyle(fontSize: 13, height: 1.5, color: Color(0xFF344054))),
             ],
           ),
         ),
