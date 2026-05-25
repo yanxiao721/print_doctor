@@ -33,7 +33,7 @@ class AIDiagnosisConfig {
   );
   static const defaultModel = String.fromEnvironment(
     'AI_DIAGNOSIS_MODEL',
-    defaultValue: 'gpt-5.5',
+    defaultValue: 'gpt-5.4',
   );
   static const defaultApiKey = String.fromEnvironment('OPENAI_API_KEY');
 

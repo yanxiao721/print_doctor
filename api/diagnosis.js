@@ -1,5 +1,5 @@
 const DEFAULT_ENDPOINT = "https://unifyapi.xyz/v1/responses";
-const DEFAULT_MODEL = "gpt-5.5";
+const DEFAULT_MODEL = "gpt-5.4";
 
 function setCorsHeaders(response) {
   response.setHeader("Access-Control-Allow-Origin", "*");

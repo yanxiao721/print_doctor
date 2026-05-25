@@ -1,7 +1,6 @@
-#!/usr/bin/env bash
 set -euo pipefail
 
-# Vercel 默认环境没有 Flutter。没有 flutter 命令时，临时下载一份稳定版 SDK 用于构建。
+# Cloudflare Pages 这类托管环境通常没有 Flutter。没有 flutter 命令时，临时下载一份稳定版 SDK 用于构建。
 if ! command -v flutter >/dev/null 2>&1; then
   export FLUTTER_HOME="${FLUTTER_HOME:-/tmp/flutter}"
   if [[ ! -x "$FLUTTER_HOME/bin/flutter" ]]; then
@@ -17,4 +16,4 @@ flutter pub get
 flutter build web \
   --release \
   --dart-define=AI_DIAGNOSIS_ENDPOINT=/api/diagnosis \
-  --dart-define=AI_DIAGNOSIS_MODEL="${AI_DIAGNOSIS_MODEL:-gpt-5.5}"
+  --dart-define=AI_DIAGNOSIS_MODEL="${AI_DIAGNOSIS_MODEL:-gpt-5.4}"
