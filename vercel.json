@@ -1,0 +1,15 @@
+{
+  "buildCommand": "./tool/build_web.sh",
+  "outputDirectory": "build/web",
+  "functions": {
+    "api/diagnosis.js": {
+      "maxDuration": 90
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!api/.*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
