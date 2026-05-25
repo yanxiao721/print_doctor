@@ -56,92 +56,102 @@ class DiagnosisForm extends StatelessWidget {
         children: [
           const SectionTitle(title: '故障信息', subtitle: '先把现象、机型、日志和图片喂进去，可选择本地规则或 AI 分析。'),
           const SizedBox(height: 18),
-          SizedBox(
-            width: 280,
-            child: SegmentedButton<String>(
-              showSelectedIcon: false,
-              segments: const [
-                ButtonSegment(value: 'local', icon: Icon(Icons.offline_bolt_outlined), label: Text('本地规则')),
-                ButtonSegment(value: 'ai', icon: Icon(Icons.auto_awesome_outlined), label: Text('AI 分析')),
-              ],
-              selected: {engine},
-              onSelectionChanged: (selection) => onEngineChanged(selection.first),
-            ),
-          ),
-          const SizedBox(height: 14),
-          DropdownButtonFormField<String>(
-            initialValue: issueOptions.contains(issueType) ? issueType : null,
-            isExpanded: true,
-            decoration: const InputDecoration(labelText: '问题类型'),
-            items: issueOptions
-                .map(
-                  (type) => DropdownMenuItem(
-                    value: type,
-                    child: Text(type, overflow: TextOverflow.ellipsis),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final isMobile = constraints.maxWidth < 500;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: isMobile ? double.infinity : 280,
+                    child: SegmentedButton<String>(
+                      showSelectedIcon: false,
+                      segments: const [
+                        ButtonSegment(value: 'local', icon: Icon(Icons.offline_bolt_outlined), label: Text('本地规则')),
+                        ButtonSegment(value: 'ai', icon: Icon(Icons.auto_awesome_outlined), label: Text('AI 分析')),
+                      ],
+                      selected: {engine},
+                      onSelectionChanged: (selection) => onEngineChanged(selection.first),
+                    ),
                   ),
-                )
-                .toList(),
-            onChanged: (value) {
-              if (value != null) {
-                onIssueChanged(value);
-              }
+                  const SizedBox(height: 14),
+                  DropdownButtonFormField<String>(
+                    initialValue: issueOptions.contains(issueType) ? issueType : null,
+                    isExpanded: true,
+                    decoration: const InputDecoration(labelText: '问题类型'),
+                    items: issueOptions
+                        .map(
+                          (type) => DropdownMenuItem(
+                            value: type,
+                            child: Text(type, overflow: TextOverflow.ellipsis),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        onIssueChanged(value);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: [
+                      SizedBox(
+                        width: isMobile ? constraints.maxWidth : 250,
+                        child: DropdownButtonFormField<String>(
+                          initialValue: printerOptions.contains(printer) ? printer : null,
+                          isExpanded: true,
+                          decoration: const InputDecoration(labelText: '机型/品牌'),
+                          items: printerOptions
+                              .map(
+                                (item) => DropdownMenuItem(
+                                  value: item,
+                                  child: Text(item, overflow: TextOverflow.ellipsis),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (value != null) {
+                              onPrinterChanged(value);
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: isMobile ? constraints.maxWidth : 160,
+                        child: DropdownButtonFormField<String>(
+                          initialValue: materialOptions.contains(material) ? material : null,
+                          isExpanded: true,
+                          decoration: const InputDecoration(labelText: '材料'),
+                          items: materialOptions
+                              .map(
+                                (item) => DropdownMenuItem(
+                                  value: item,
+                                  child: Text(item, overflow: TextOverflow.ellipsis),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (value != null) {
+                              onMaterialChanged(value);
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: isMobile ? constraints.maxWidth : 250,
+                        child: TextField(
+                          controller: slicerController,
+                          decoration: const InputDecoration(labelText: '切片软件'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
             },
-          ),
-          const SizedBox(height: 12),
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              SizedBox(
-                width: 250,
-                child: DropdownButtonFormField<String>(
-                  initialValue: printerOptions.contains(printer) ? printer : null,
-                  isExpanded: true,
-                  decoration: const InputDecoration(labelText: '机型/品牌'),
-                  items: printerOptions
-                      .map(
-                        (item) => DropdownMenuItem(
-                          value: item,
-                          child: Text(item, overflow: TextOverflow.ellipsis),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      onPrinterChanged(value);
-                    }
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 160,
-                child: DropdownButtonFormField<String>(
-                  initialValue: materialOptions.contains(material) ? material : null,
-                  isExpanded: true,
-                  decoration: const InputDecoration(labelText: '材料'),
-                  items: materialOptions
-                      .map(
-                        (item) => DropdownMenuItem(
-                          value: item,
-                          child: Text(item, overflow: TextOverflow.ellipsis),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      onMaterialChanged(value);
-                    }
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 250,
-                child: TextField(
-                  controller: slicerController,
-                  decoration: const InputDecoration(labelText: '切片软件'),
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: 12),
           TextField(

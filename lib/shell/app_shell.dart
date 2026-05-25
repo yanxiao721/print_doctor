@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_module.dart';
 
 class AppShell extends StatelessWidget {
-  const AppShell({
-    super.key,
-    required this.selectedModule,
-    required this.onModuleChanged,
-    required this.child,
-  });
+  const AppShell({super.key, required this.selectedModule, required this.onModuleChanged, required this.child});
 
   final AppModule selectedModule;
   final ValueChanged<AppModule> onModuleChanged;
@@ -36,12 +31,7 @@ class AppShell extends StatelessWidget {
                         .map(
                           (module) => Padding(
                             padding: const EdgeInsets.only(right: 8),
-                            child: ChoiceChip(
-                              selected: selectedModule == module,
-                              avatar: Icon(module.icon, size: 17),
-                              label: Text(module.label),
-                              onSelected: (_) => onModuleChanged(module),
-                            ),
+                            child: ChoiceChip(selected: selectedModule == module, avatar: Icon(module.icon, size: 17), label: Text(module.label), onSelected: (_) => onModuleChanged(module)),
                           ),
                         )
                         .toList(),
@@ -67,21 +57,13 @@ class AppShell extends StatelessWidget {
                 children: [
                   const Text(
                     '功能区',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFF667085),
-                    ),
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: Color(0xFF667085)),
                   ),
                   const SizedBox(height: 10),
                   ...AppModule.values.map(
                     (module) => Padding(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: NavItem(
-                        module: module,
-                        selected: selectedModule == module,
-                        onTap: () => onModuleChanged(module),
-                      ),
+                      child: NavItem(module: module, selected: selectedModule == module, onTap: () => onModuleChanged(module)),
                     ),
                   ),
                 ],
@@ -103,25 +85,17 @@ class _ModuleContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(MediaQuery.sizeOf(context).width < 480 ? 12 : 20),
       child: Align(
         alignment: Alignment.topCenter,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1180),
-          child: child,
-        ),
+        child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 1180), child: child),
       ),
     );
   }
 }
 
 class NavItem extends StatelessWidget {
-  const NavItem({
-    super.key,
-    required this.module,
-    required this.selected,
-    required this.onTap,
-  });
+  const NavItem({super.key, required this.module, required this.selected, required this.onTap});
 
   final AppModule module;
   final bool selected;
@@ -138,29 +112,15 @@ class NavItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? const Color(0xFFEFF6F5) : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: selected ? const Color(0xFFC9E7E1) : Colors.transparent,
-          ),
+          border: Border.all(color: selected ? const Color(0xFFC9E7E1) : Colors.transparent),
         ),
         child: Row(
           children: [
-            Icon(
-              module.icon,
-              size: 19,
-              color: selected
-                  ? const Color(0xFF0F766E)
-                  : const Color(0xFF667085),
-            ),
+            Icon(module.icon, size: 19, color: selected ? const Color(0xFF0F766E) : const Color(0xFF667085)),
             const SizedBox(width: 10),
             Text(
               module.label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
-                color: selected
-                    ? const Color(0xFF0F514A)
-                    : const Color(0xFF344054),
-              ),
+              style: TextStyle(fontSize: 14, fontWeight: selected ? FontWeight.w800 : FontWeight.w600, color: selected ? const Color(0xFF0F514A) : const Color(0xFF344054)),
             ),
           ],
         ),
